@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Nota guardada · Mente Segura{% endblock %}
+
+{% block content %}
+<main class="saved-screen">
+    <header class="new-header">
+        <a href="{{ url_for('diario') }}" class="back-arrow">‹</a>
+        <h1>Diario emocional</h1>
+    </header>
+
+    <article class="saved-note">
+        <img src="{{ url_for('static', filename='images/' + note_image) }}">
+        <div class="saved-note-body">
+            <span class="saved-date">{{ note['fecha_hora'].replace('T', ' ') }}</span>
+            {% if note['titulo'] %}
+            <h2>{{ note['titulo'] }}</h2>
+            {% endif %}
+            <p>{{ note['texto'] }}</p>
+        </div>
+    </article>
+
+    <div class="saved-actions">
+        <a href="{{ url_for('editar_nota', id_nota=note['id_nota']) }}">♢<small>Editar</small></a>
+        <form method="post" action="{{ url_for('eliminar_nota', id_nota=note['id_nota']) }}" onsubmit="return confirm('¿Eliminar esta nota?')">
+            <button type="submit">♜<small>Eliminar</small></button>
+        </form>
+    </div>
+
+    <a class="save-button return-diary" href="{{ url_for('diario') }}">Volver al diario</a>
+</main>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Biblioteca · Mente Segura{% endblock %}
+
+{% block content %}
+<main class="content-screen">
+    <header class="section-header">
+        <a href="{{ url_for('hoy') }}" class="back-arrow">‹</a>
+        <div>
+            <span class="eyebrow">RECURSOS</span>
+            <h1>Biblioteca digital</h1>
+        </div>
+    </header>
+
+    <p class="section-lead">Materiales para acompañar tu bienestar.</p>
+
+    <div class="resource-list">
+        {% for item in resources %}
+        <article class="resource-card">
+            <div class="resource-icon">▤</div>
+            <div>
+                <span class="resource-type">{{ item['tipo'] }}</span>
+                <h2>{{ item['titulo'] }}</h2>
+                <p>{{ item['descripcion'] }}</p>
+                <a class="small-button" href="{{ item['url'] }}" target="_blank" rel="noopener">Ver recurso ↗</a>
+            </div>
+        </article>
+        {% else %}
+        <div class="empty-entry">No hay recursos disponibles.</div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

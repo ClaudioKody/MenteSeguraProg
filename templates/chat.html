@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Chat de apoyo · Mente Segura{% endblock %}
+
+{% block content %}
+‹
+APOYO 
+PREVENTIVO
+Chat de apoyo
+Este chat brinda orientación preventiva y no reemplaza la atención profesional.
+
+{% if risk_level in ['moderado', 'alto', 'critico'] %}
+    {{ risk_message }}
+    {% if risk_level == 'critico' %}
+        Aviso preventivo preparado para: {{ current_user['contacto_confianza'] }}. Elegí cómo pedir apoyo.
+        Enviar SMS
+        Llamar
+        Recomendaciones
+        El SMS se abre preparado para que lo revises y confirmes desde tu celular.
+        Para este momento
+        No te quedes a solas. Avisale a alguien cercano, apoyá los pies en el piso y buscá ayuda profesional.
+        Respirar ahora
+        Ver ayuda profesional
+    {% else %}
+        Abrir respiración guiada
+    {% endif %}
+{% endif %}
+
+{% if not messages %}
+    Escribí cómo te sentís para comenzar.
+{% endif %}
+
+{% for message in messages %}
+    {{ message['texto'] }}
+{% endfor %}
+
+{% if suggestions %}
+    Sugerencias para este momento
+    {% for suggestion in suggestions %}
+        {{ suggestion }}
+    {% endfor %}
+{% endif %}
+
+Podés probar
+Enviar
+Respirar
+Limpiar conversación
+{% endblock %}
