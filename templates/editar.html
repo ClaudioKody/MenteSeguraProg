@@ -1,0 +1,18 @@
+{% extends 'base.html' %}{% block title %}Editar nota · Mente Segura{% endblock %}{% block 
+content %}<main class="new-screen"><header class="new-header"><a href="{{ 
+url_for('ver_nota',id_nota=note['id_nota']) }}" class="back-arrow">‹</a><h1>Editar 
+nota</h1></header><form class="note-card-form" method="post"><label>Título 
+(opcional)</label><input class="note-title" name="titulo" value="{{ note['titulo'] }}" 
+placeholder="¿Qué quieres escribir hoy?"><label>Escribe aquí cómo te 
+sientes...</label><textarea name="texto" required>{{ note['texto'] }}</textarea><div 
+class="counter">{{ note['texto']|length }}/2000</div><label class="mood-label">Estado de 
+ánimo (opcional)</label><select class="mood-select" name="estado_animo"><option 
+value="">Detectar automáticamente</option><option {% if note['estado_animo']=='tranquilo/a' 
+%}selected{% endif %}>tranquilo/a</option><option {% if note['estado_animo']=='ansioso/a' 
+%}selected{% endif %}>ansioso/a</option><option {% if note['estado_animo']=='triste' 
+%}selected{% endif %}>triste</option><option {% if note['estado_animo']=='agotado/a' 
+%}selected{% endif %}>agotado/a</option><option {% if note['estado_animo']=='motivado/a' 
+%}selected{% endif %}>motivado/a</option></select><div class="note-meta-row"><span>▣ 
+<b>Fecha</b><small>{{ note['fecha_hora'].replace('T',' ') }}</small></span><i></i><span>◷ 
+<b>Hora</b><small>09:41</small></span></div><button class="save-button" type="submit">▣ &nbsp; 
+Guardar cambios</button></form></main>{% endblock %} 
