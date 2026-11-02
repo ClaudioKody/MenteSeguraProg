@@ -1,0 +1,87 @@
+{% extends 'base.html' %} 
+ 
+{% block title %}Mente Segura · Frase del día{% endblock %} 
+ 
+{% block content %} 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script> 
+ 
+<main class="photo-screen" style="--bg-img: url('{{ image_url }}'); background-image: linear-gradient(180deg, rgba(52,32,58,.08) 0%, rgba(52,32,58,.12) 38%, rgba(52,32,58,.78) 79%, rgba(52,32,58,.9) 100%), var(--bg-img);"> 
+    <header class="photo-header"> 
+        <div class="logo-lockup"> 
+            <span class="logo-flower">♧</span> 
+            <div><strong>Mente Segura</strong><small>TU BIENESTAR IMPORTA</small></div> 
+        </div> 
+        <span class="photo-heart">♡</span> 
+    </header> 
+     
+    <section class="quote-center"> 
+        <span class="date-chip">FRASE DEL DÍA</span> 
+        <blockquote>“{{ quote['texto'] }}”</blockquote> 
+        <div class="quote-divider"><i></i><span>♡</span><i></i></div> 
+        <p>— {{ quote['autor'] }}</p> 
+    </section> 
+     
+    <section class="photo-actions"> 
+        <div class="action-row"> 
+            <button class="photo-button" type="button" onclick="descargarTarjeta()">Descargar</button> 
+            <button class="photo-button" type="button" onclick="shareImage('{{ image_url }}')">Compartir</button> 
+        </div> 
+        <a class="diary-button" href="{{ url_for('diario') }}">Ingresar al diario</a> 
+    </section> 
+     
+    <div id="share-status" class="share-status" role="status"></div> 
+</main> 
+ 
+<script> 
+async function descargarTarjeta() { 
+    const status = document.getElementById('share-status'); 
+    const pantalla = document.querySelector('.photo-screen'); 
+    const acciones = document.querySelector('.photo-actions'); 
+    try { 
+        acciones.style.display = 'none'; 
+        status.style.display = 'none'; 
+         
+        const canvas = await html2canvas(pantalla, { 
+            useCORS: true, 
+            scale: 2 
+        }); 
+ 
+        acciones.style.display = ''; 
+        status.style.display = ''; 
+ 
+        const enlace = document.createElement('a'); 
+        enlace.download = 'frase-mente-segura.jpg'; 
+        enlace.href = canvas.toDataURL('image/jpeg', 0.9); 
+        enlace.click(); 
+         
+    } catch (error) { 
+        acciones.style.display = ''; 
+        status.style.display = ''; 
+        console.error(error); 
+    } 
+} 
+ 
+async function shareImage(url){ 
+    const status = document.getElementById('share-status'); 
+    const done = (message) => { 
+        status.textContent = message; 
+        status.classList.add('show'); 
+        setTimeout(() => status.classList.remove('show'), 3200); 
+    }; 
+    try { 
+        if(navigator.share){ 
+            await navigator.share({title:'Frase del día · Mente Segura', text:'Una frase para acompañar tu día', url}); 
+            done('Compartir abierto'); 
+        }else if(navigator.clipboard && window.isSecureContext){ 
+            await navigator.clipboard.writeText(url); 
+            done('URL de la imagen copiada'); 
+        }else{ 
+            window.prompt('Copiá la URL de la imagen:', url); 
+            done('URL lista para copiar'); 
+        } 
+    } catch(error){ 
+        if(error.name !== 'AbortError') done('No se pudo compartir; la URL está disponible para copiar'); 
+    } 
+} 
+</script> 
+{% endblock %}
