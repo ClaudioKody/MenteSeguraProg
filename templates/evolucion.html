@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Mi evolución · Mente Segura{% endblock %}
+
+{% block content %}
+<main class="content-screen sprint3-screen">
+    <div class="section-header">
+        <a class="back-arrow" href="{{ url_for('hoy') }}">‹</a>
+        <div>
+            <span class="eyebrow">SEGUIMIENTO PERSONAL</span>
+            <h1>Mi evolución</h1>
+        </div>
+    </div>
+
+    <div class="progress-hero">
+        <strong>{{ total_entries }}</strong>
+        <span>registros de ánimo</span>
+        <p>{{ achievement }}</p>
+    </div>
+
+    <section class="progress-card positive-progress">
+        <div>
+            <span class="eyebrow">AVANCES RECONOCIDOS</span>
+            <h2>También cuenta lo bueno</h2>
+        </div>
+        <div class="positive-numbers">
+            <strong>{{ positive_count }}</strong>
+            <span>logros registrados</span>
+        </div>
+        {% if week_positive %}
+        <p>Esta semana registraste {{ week_positive }} {{ 'avance positivo' if week_positive == 1 else 'avances positivos' }}. ¡Seguí reconociendo lo que te hace bien!</p>
+        {% else %}
+        <p>Cuando cuentes algo que te hizo bien —como ir al gimnasio, disfrutar un momento o sentirte mejor— lo vamos a guardar acá.</p>
+        {% endif %}
+    </section>
+
+    <section class="progress-card">
+        <h2>Resumen semanal</h2>
+        <div class="progress-stats">
+            <div>
+                <strong>{{ week_notes }}</strong>
+                <span>notas</span>
+            </div>
+            <div>
+                <strong>{{ week_chat }}</strong>
+                <span>pausas en chat</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="progress-card">
+        <h2>Estados registrados</h2>
+        {% if mood_rows %}
+        <div class="mood-bars">
+            {% for row in mood_rows %}
+            <div class="mood-row">
+                <span>{{ row['estado'] }}</span>
+                <b><i style="width: {{  (row['total'] / total_entries * 100 )|round|int }}%"></i></b>
+                <small>{{ row['total'] }}</small>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="empty-progress">Cuando registres una nota con tu estado de ánimo, vas a verlo acá.</p>
+        {% endif %}
+    </section>
+
+    <section class="progress-card">
+        <h2>Tu registro reciente</h2>
+        {% if chart_labels %}
+        <div class="timeline">
+            {% for label in chart_labels %}
+            <div>
+                <span>{{ label }}</span>
+                <b>{{ chart_values[loop.index0] }}</b>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="empty-progress">Todavía no hay registros suficientes.</p>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}
