@@ -1,0 +1,12 @@
+{% extends 'base.html' %}{% block title %}Ayuda profesional · Mente Segura{% endblock %}{% 
+block content %}<main class="content-screen help-screen"><header class="section-header"><a 
+href="{{ url_for('hoy') }}" class="back-arrow">‹</a><div><span 
+class="eyebrow">ACOMPAÑAMIENTO</span><h1>Ayuda profesional</h1></div></header><p 
+class="section-lead">Si necesitás hablar con alguien, encontrá una opción cercana.</p><div 
+class="help-list">{% for item in contacts %}<article class="help-card"><div 
+class="help-icon">☎</div><div><span class="resource-type">{{ item['tipo'] }}</span><h2>{{ 
+item['nombre'] }}</h2><p>{{ item['descripcion'] }}</p><a class="call-button" href="tel:{{ 
+item['telefono'] }}">Llamar · {{ item['telefono'] }}</a></div></article>{% else %}<div 
+class="empty-entry">No hay contactos disponibles.</div>{% endfor %}</div><p 
+class="help-note">Ante una emergencia inmediata, contactá al servicio de emergencias de tu 
+localidad.</p></main>{% endblock %} 
