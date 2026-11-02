@@ -48,21 +48,21 @@
             {% for item in resources %}
             <div class="admin-item">
                 <div>
-                    <b>{{ item['titulo'] }}</b>
-                    <small>{{ item['tipo'] }} · {{ item['url'] }}</small>
+                    <b>{{ item.titulo }}</b>
+                    <small>{{ item.tipo }} · {{ item.url }}</small>
                 </div>
                 <div class="admin-item-actions">
-                    <button class="icon-edit" type="button" onclick="toggleEdit('resource-{{ item['id_recurso'] }}')">Editar</button>
-                    <form method="post" action="{{ url_for('admin_eliminar_recurso', resource_id=item['id_recurso']) }}">
-                        <button class="icon-delete" onclick="return confirm('¿Eliminar este recurso?')">×</button>
+                    <button class="icon-edit" type="button" onclick="toggleEdit('resource-{{ item.id_recurso }}')">Editar</button>
+                    <form method="post" action="{{ url_for('admin_eliminar_recurso', resource_id=item.id_recurso) }}" style="display:inline;">
+                        <button class="icon-delete" type="submit" onclick="return confirm('¿Eliminar este recurso?')">×</button>
                     </form>
                 </div>
-                <form id="resource-{{ item['id_recurso'] }}" class="inline-edit" hidden method="post" action="{{ url_for('admin_guardar_recurso') }}">
-                    <input type="hidden" name="id_recurso" value="{{ item['id_recurso'] }}">
-                    <input name="titulo" value="{{ item['titulo'] }}" required>
-                    <input name="tipo" value="{{ item['tipo'] }}">
-                    <input name="url" value="{{ item['url'] }}" required>
-                    <input name="descripcion" value="{{ item['descripcion'] }}">
+                <form id="resource-{{ item.id_recurso }}" class="inline-edit" hidden method="post" action="{{ url_for('admin_guardar_recurso') }}">
+                    <input type="hidden" name="id_recurso" value="{{ item.id_recurso }}">
+                    <input name="titulo" value="{{ item.titulo }}" required>
+                    <input name="tipo" value="{{ item.tipo }}">
+                    <input name="url" value="{{ item.url }}" required>
+                    <input name="descripcion" value="{{ item.descripcion }}">
                     <button class="primary-button" type="submit">Guardar cambios</button>
                 </form>
             </div>
@@ -85,21 +85,21 @@
             {% for item in contacts %}
             <div class="admin-item">
                 <div>
-                    <b>{{ item['nombre'] }}</b>
-                    <small>{{ item['telefono'] }} · {{ item['tipo'] }}</small>
+                    <b>{{ item.nombre }}</b>
+                    <small>{{ item.telefono }} · {{ item.tipo }}</sal>
                 </div>
                 <div class="admin-item-actions">
-                    <button class="icon-edit" type="button" onclick="toggleEdit('help-{{ item['id_ayuda'] }}')">Editar</button>
-                    <form method="post" action="{{ url_for('admin_eliminar_ayuda', help_id=item['id_ayuda']) }}">
-                        <button class="icon-delete" onclick="return confirm('¿Eliminar este contacto?')">×</button>
+                    <button class="icon-edit" type="button" onclick="toggleEdit('help-{{ item.id_ayuda }}')">Editar</button>
+                    <form method="post" action="{{ url_for('admin_eliminar_ayuda', help_id=item.id_ayuda) }}" style="display:inline;">
+                        <button class="icon-delete" type="submit" onclick="return confirm('¿Eliminar este contacto?')">×</button>
                     </form>
                 </div>
-                <form id="help-{{ item['id_ayuda'] }}" class="inline-edit" hidden method="post" action="{{ url_for('admin_guardar_ayuda') }}">
-                    <input type="hidden" name="id_ayuda" value="{{ item['id_ayuda'] }}">
-                    <input name="nombre" value="{{ item['nombre'] }}" required>
-                    <input name="tipo" value="{{ item['tipo'] }}">
-                    <input name="telefono" value="{{ item['telefono'] }}" required>
-                    <input name="descripcion" value="{{ item['descripcion'] }}">
+                <form id="help-{{ item.id_ayuda }}" class="inline-edit" hidden method="post" action="{{ url_for('admin_guardar_ayuda') }}">
+                    <input type="hidden" name="id_ayuda" value="{{ item.id_ayuda }}">
+                    <input name="nombre" value="{{ item.nombre }}" required>
+                    <input name="tipo" value="{{ item.tipo }}">
+                    <input name="telefono" value="{{ item.telefono }}" required>
+                    <input name="descripcion" value="{{ item.descripcion }}">
                     <button class="primary-button" type="submit">Guardar cambios</button>
                 </form>
             </div>
@@ -112,15 +112,21 @@
 <script>
     function toggleEdit(id) {
         const form = document.getElementById(id);
-        form.hidden = !form.hidden;
+        if (form) {
+            form.hidden = !form.hidden;
+        }
     }
+
+    const chartLabels = JSON.parse('{{ chart_labels | tojson | safe }}');
+    const chartValues = JSON.parse('{{ chart_values | tojson | safe }}');
+
     new Chart(document.getElementById('growthChart'), {
         type: 'line',
         data: {
-            labels: {{ chart_labels | tojson }},
+            labels: chartLabels,
             datasets: [{
                 label: 'Usuarios',
-                data: {{ chart_values | tojson }},
+                data: chartValues,
                 borderColor: '#76538b',
                 backgroundColor: 'rgba(118,83,139,.13)',
                 fill: true,

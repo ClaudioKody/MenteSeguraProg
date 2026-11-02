@@ -1,21 +1,75 @@
-{% extends 'base.html' %}{% block title %}Respiración guiada · Mente Segura{% endblock %}{% 
-block content %}<main class="content-screen sprint3-screen breathing-screen"><div 
-class="section-header"><a class="back-arrow" href="{{ url_for('chat') }}">‹</a><div><span 
-class="eyebrow">PAUSA CONSCIENTE</span><h1>Respirar</h1></div></div><p 
-class="section-lead">Seguí el círculo a tu ritmo.</p><div class="breathing-orb" 
-id="breathing-orb"><span id="breathing-label">Prepará</span></div><div 
-class="breathing-count" id="breathing-count">4</div><button class="primary-button 
-breathing-start" id="breathing-start" type="button">Comenzar</button><a class="text-back" 
-href="{{ url_for('chat') }}">Volver al chat</a></main><script>const 
-orb=document.querySelector('#breathing-orb'),label=document.querySelector('#breathing-label')
-,count=document.querySelector('#breathing-count'),start=document.querySelector('#breathing-st
-art');const phases=[['Inhalá',4],['Sostené',4],['Exhalá',6],['Descansá',2]];let 
-timer=null,phaseIndex=0,remaining=phases[0][1],running=false;function renderPhase(){const 
-phase=phases[phaseIndex];label.textContent=phase[0];count.textContent=remaining;orb.className
-='breathing-orb phase-'+phaseIndex}function 
-run(){if(timer)return;running=true;start.textContent='Pausar';renderPhase();timer=setInterval
-(()=>{remaining-=1;count.textContent=remaining;if(remaining<=0){phaseIndex=(phaseIndex+1)%pha
-ses.length;remaining=phases[phaseIndex][1];renderPhase()}},1000)}function 
-pause(){clearInterval(timer);timer=null;running=false;label.textContent='Pausado';start.textC
-ontent='Continuar';orb.className='breathing-orb'}start.onclick=()=>{if(running){pause()}else{
-run()}};</script>{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}Respiración guiada · Mente Segura{% endblock %}
+
+{% block content %}
+<main class="content-screen sprint3-screen breathing-screen">
+    <div class="section-header">
+        <a class="back-arrow" href="{{ url_for('chat') }}">‹</a>
+        <div>
+            <span class="eyebrow">PAUSA CONSCIENTE</span>
+            <h1>Respirar</h1>
+        </div>
+    </div>
+    
+    <p class="section-lead">Seguí el círculo a tu ritmo.</p>
+    
+    <div class="breathing-orb" id="breathing-orb">
+        <span id="breathing-label">Prepará</span>
+    </div>
+    
+    <div class="breathing-count" id="breathing-count">4</div>
+    <button class="primary-button breathing-start" id="breathing-start" type="button">Comenzar</button>
+    <a class="text-back" href="{{ url_for('chat') }}">Volver al chat</a>
+</main>
+
+<script>
+    const orb = document.querySelector('#breathing-orb'),
+          label = document.querySelector('#breathing-label'),
+          count = document.querySelector('#breathing-count'),
+          start = document.querySelector('#breathing-start');
+    
+    const phases = [['Inhalá', 4], ['Sostené', 4], ['Exhalá', 6], ['Descansá', 2]];
+    let timer = null, phaseIndex = 0, remaining = phases[0][1], running = false;
+    
+    function renderPhase() {
+        const phase = phases[phaseIndex];
+        label.textContent = phase[0];
+        count.textContent = remaining;
+        orb.className = 'breathing-orb phase-' + phaseIndex;
+    }
+    
+    function run() {
+        if (timer) return;
+        running = true;
+        start.textContent = 'Pausar';
+        renderPhase();
+        timer = setInterval(() => {
+            remaining -= 1;
+            count.textContent = remaining;
+            if (remaining <= 0) {
+                phaseIndex = (phaseIndex + 1) % phases.length;
+                remaining = phases[phaseIndex][1];
+                renderPhase();
+            }
+        }, 1000);
+    }
+    
+    function pause() {
+        clearInterval(timer);
+        timer = null;
+        running = false;
+        label.textContent = 'Pausado';
+        start.textContent = 'Continuar';
+        orb.className = 'breathing-orb';
+    }
+    
+    start.onclick = () => {
+        if (running) {
+            pause();
+        } else {
+            run();
+        }
+    };
+</script>
+{% endblock %}

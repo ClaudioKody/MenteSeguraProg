@@ -1,13 +1,35 @@
-{% extends 'base.html' %}{% block title %}Diario emocional · Mente Segura{% endblock %}{% 
-block content %}<main class="diary-screen"><header class="diary-header"><a href="{{ 
-url_for('hoy') }}" class="back-arrow">‹</a><h1>Diario emocional</h1><a class="new-pill" 
-href="{{ url_for('nueva_nota') }}">+ Nueva nota</a></header>{% if notes %}<div 
-class="entry-list">{% for note in notes %}<a class="entry-card" href="{{ 
-url_for('ver_nota',id_nota=note['id_nota']) }}"><img src="{{ 
-url_for('static',filename='images/' + 
-['journal-morning.jpg','wildflowers.jpg','hero-sunset.jpg'][loop.index0 % 3]) 
-}}"><div><span>{{ note['fecha_hora'].replace('T',' ') }}</span><p>{{ 
-note['texto']|truncate(95) }}</p></div><b>›</b></a>{% endfor %}</div>{% else %}<div 
-class="empty-entry"><span>✎</span><p>Aún no hay notas</p></div>{% endif %}<a 
-class="pdf-button" href="{{ url_for('descargar_registro') }}">⇩ &nbsp; Exportar diario en 
-PDF</a></main>{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}Diario emocional · Mente Segura{% endblock %}
+
+{% block content %}
+<main class="diary-screen">
+    <header class="diary-header">
+        <a href="{{ url_for('hoy') }}" class="back-arrow">‹</a>
+        <h1>Diario emocional</h1>
+        <a class="new-pill" href="{{ url_for('nueva_nota') }}">+ Nueva nota</a>
+    </header>
+
+    {% if notes %}
+    <div class="entry-list">
+        {% for note in notes %}
+        <a class="entry-card" href="{{ url_for('ver_nota', id_nota=note['id_nota']) }}">
+            <img src="{{ url_for('static', filename='images/' + ['journal-morning.jpg', 'wildflowers.jpg', 'hero-sunset.jpg'][loop.index0 % 3]) }}">
+            <div>
+                <span>{{ note['fecha_hora'].replace('T', ' ') }}</span>
+                <p>{{ note['texto'] | truncate(95) }}</p>
+            </div>
+            <b>›</b>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-entry">
+        <span>✎</span>
+        <p>Aún no hay notas</p>
+    </div>
+    {% endif %}
+
+    <a class="pdf-button" href="{{ url_for('descargar_registro') }}">⇩ &nbsp; Exportar diario en PDF</a>
+</main>
+{% endblock %}

@@ -55,7 +55,7 @@
             {% for row in mood_rows %}
             <div class="mood-row">
                 <span>{{ row['estado'] }}</span>
-                <b><i style="width: {{  (row['total'] / total_entries * 100 )|round|int }}%"></i></b>
+                <b><i style="width: {{ (row['total'] / total_entries * 100) | round | int }}%;"></i></b>
                 <small>{{ row['total'] }}</small>
             </div>
             {% endfor %}
