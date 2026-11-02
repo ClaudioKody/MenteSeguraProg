@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Crear cuenta · Mente Segura{% endblock %}
+{% block content %}
+<main class="auth-screen">
+    <div class="auth-card">
+        <span class="auth-symbol">❀</span>
+        <h1>Crear cuenta</h1>
+        <p>Tu espacio personal empieza acá.</p>
+        <form method="post">
+            <label>Nombre</label>
+            <input name="nombre" required>
+            <label>Apellido</label>
+            <input name="apellido" required>
+            <label>Correo electrónico</label>
+            <input type="email" name="email" required>
+            <label>Contraseña</label>
+            <input type="password" name="password" required minlength="6">
+            <label>Número del contacto de confianza</label>
+            <input type="tel" name="contacto_confianza" required placeholder="Ej.: 11 5555 5555" inputmode="tel">
+            <button class="primary-button" type="submit">Registrarme</button>
+        </form>
+        <a class="auth-link" href="{{ url_for('login') }}">Ya tengo una cuenta</a>
+    </div>
+</main>
+{% endblock %}
