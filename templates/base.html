@@ -1,1 +1,20 @@
-carpeta creada
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" 
+content="width=device-width, initial-scale=1"><title>{% block title %}Mente Segura{% endblock 
+%}</title><link rel="stylesheet" href="{{ url_for('static', filename='styles.css') 
+}}"></head><body><div class="app-shell">{% if current_user %}<button class="menu-toggle" 
+type="button" onclick="document.body.classList.toggle('menu-open')" aria-label="Abrir 
+menú">☰</button><div class="menu-backdrop" 
+onclick="document.body.classList.remove('menu-open')"></div><aside class="side-menu"><button 
+class="menu-close" type="button" 
+onclick="document.body.classList.remove('menu-open')">×</button><div class="menu-brand">Mente 
+Segura<small>{{ current_user['nombre'] }}</small></div><nav>{% if 
+current_user['rol']=='usuario' %}<a href="{{ url_for('hoy') }}">Frase del día</a><a href="{{ 
+url_for('biblioteca') }}">Biblioteca</a><a href="{{ url_for('ayuda') }}">Ayuda 
+profesional</a><a href="{{ url_for('ingresar') }}">Diario emocional</a><a href="{{ 
+url_for('chat') }}">Chat de apoyo</a><a href="{{ url_for('evolucion') }}">Mi evolución</a>{% 
+else %}<a href="{{ url_for('admin_dashboard') }}">Panel administrador</a>{% endif %}</nav><a 
+class="menu-logout" href="{{ url_for('logout') }}">Cerrar sesión</a></aside>{% endif %}{% 
+with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div 
+class="flash-stack">{% for category,message in messages %}<div class="flash {{ category 
+}}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}{% block content %}{% 
+endblock %}</div></body></html>
