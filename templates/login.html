@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Ingresar · Mente Segura{% endblock %}
+{% block content %}
+<main class="auth-screen">
+    <div class="auth-card">
+        <span class="auth-symbol">♡</span>
+        <h1>Ingresar</h1>
+        <p>Continuá tu espacio de bienestar.</p>
+        <form method="post">
+            <label>Correo electrónico</label>
+            <input type="email" name="email" required autocomplete="email">
+            <label>Contraseña</label>
+            <input type="password" name="password" required autocomplete="current-password">
+            <label class="check-line">
+                <input type="checkbox" name="es_admin" onchange="document.getElementById('admin-doc').hidden=!this.checked"> Soy Administrador
+            </label>
+            <div id="admin-doc" hidden>
+                <label>Número de documento del administrador</label>
+                <input name="documento" inputmode="numeric">
+            </div>
+            <button class="primary-button" type="submit">Ingresar</button>
+        </form>
+        <a class="auth-link" href="{{ url_for('registro') }}">Crear una cuenta</a>
+    </div>
+</main>
+{% endblock %}
