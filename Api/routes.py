@@ -3,10 +3,10 @@ from datetime import datetime
 from flask import Blueprint, jsonify, request, session 
 from werkzeug.security import check_password_hash, generate_password_hash 
  
-api = Blueprint("api", __name__, url_prefix="/api") 
  
  
 def register_api(app): 
+    api = Blueprint("api", __name__)
     from app import analyze_risk, conversation_replies, daily_quote, get_db, mood_from_text, PIN_DE_PRUEBA 
     from repositories.nota_repository import NotaRepository 
     from strategies.chat_strategy import seleccionar_estrategia 
