@@ -1,0 +1,14 @@
+{% extends 'base.html' %}{% block title %}Nueva nota · Mente Segura{% endblock %}{% block 
+content %}<main class="new-screen"><header class="new-header"><a href="{{ url_for('diario') 
+}}" class="back-arrow">‹</a><h1>Diario emocional</h1></header><form class="note-card-form" 
+method="post"><label>Título (opcional)</label><input class="note-title" name="titulo" 
+placeholder="¿Qué quieres escribir hoy?"><label>Escribe aquí cómo te 
+sientes...</label><textarea name="texto" placeholder="Escribe aquí cómo te sientes..." 
+required></textarea><div class="counter">0/2000</div><label class="mood-label">Estado de 
+ánimo (opcional)</label><select class="mood-select" name="estado_animo"><option 
+value="">Detectar 
+automáticamente</option><option>tranquilo/a</option><option>ansioso/a</option><option>triste<
+/option><option>agotado/a</option><option>motivado/a</option></select><div 
+class="note-meta-row"><span>▣ <b>Fecha</b><small>{{ now_date }}</small></span><i></i><span>◷ 
+<b>Hora</b><small>{{ now_time if now_time else '09:41' }}</small></span></div><button 
+class="save-button" type="submit">▣ &nbsp; Guardar</button></form></main>{% endblock %} 
