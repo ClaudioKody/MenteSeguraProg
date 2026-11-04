@@ -838,8 +838,8 @@ def admin_eliminar_ayuda(help_id):
 
 
 
-from api.routes import register_api
-from api.openapi import register_docs
+from Api.routes import register_api
+from Api.openapi import register_docs
 register_api(app)
 register_docs(app)
 
